@@ -74,7 +74,7 @@ Download and install from: https://www.libreoffice.org/download/download/
 
 1. **Clone or download this repository**
 ```bash
-cd /home/leapfrog/poc/converter
+cd /home/<user name>/converter
 ```
 
 2. **Create a virtual environment (recommended)**
