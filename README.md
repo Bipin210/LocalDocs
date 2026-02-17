@@ -6,13 +6,13 @@ A professional, privacy-first PDF manipulation web application that runs entirel
 
 ### Organize PDF
 - **Merge PDF** - Combine multiple PDFs into one document
-- **Split PDF** - Extract pages from your PDF
+- **Split PDF** - Extract pages from your PDF (all pages or specific ranges)
 - **Compress PDF** - Reduce file size while maintaining quality
 - **Rotate PDF** - Rotate pages to the right orientation
 
 ### Convert from PDF
 - **PDF to Word** - Convert PDF to editable Word document (.docx)
-- **PDF to Images** - Extract images from PDF pages
+- **PDF to Images** - Extract PDF pages as images (PNG, JPG, WEBP, TIFF)
 
 ### Convert to PDF
 - **Word to PDF** - Convert Word documents (.doc, .docx) to PDF
@@ -21,12 +21,16 @@ A professional, privacy-first PDF manipulation web application that runs entirel
 - **HTML to PDF** - Convert HTML files to PDF
 - **Images to PDF** - Convert multiple images to a single PDF
 
+### Image Tools
+- **Compress Images** - Reduce image file sizes with quality control
+
 ## Why Choose This Tool?
 
 ✅ **100% Private** - All files are processed locally on your machine  
 ✅ **Fast Processing** - No upload/download time, instant results  
-✅ **Unlimited Use** - No file size limits or usage restrictions  
+✅ **Unlimited Use** - No usage restrictions (100MB file size limit)  
 ✅ **Works Offline** - No internet connection required after setup  
+✅ **Auto Cleanup** - Temporary files automatically deleted after 2 hours  
 
 ## Prerequisites
 
@@ -72,9 +76,10 @@ Download and install from: https://www.libreoffice.org/download/download/
 
 ## Installation
 
-1. **Clone or download this repository**
+1. **Clone the repository**
 ```bash
-cd /home/leapfrog/poc/converter
+git clone <repository-url>
+cd LocalDocs
 ```
 
 2. **Create a virtual environment (recommended)**
@@ -133,33 +138,52 @@ http://localhost:5000
 ## Project Structure
 
 ```
-converter/
-├── app.py                 # Main Flask application
-├── requirements.txt       # Python dependencies
+LocalDocs/
+├── app.py                    # Main Flask application (13 routes)
+├── requirements.txt          # Python dependencies
 ├── utils/
-│   ├── pdf_operations.py  # PDF manipulation functions
-│   └── converters.py      # Format conversion functions
-├── templates/             # HTML templates
+│   ├── __init__.py
+│   ├── pdf_operations.py     # PDF manipulation functions
+│   └── converters.py         # Format conversion functions
+├── templates/                # HTML templates (13 pages)
 │   ├── index.html
 │   ├── merge_pdf.html
 │   ├── split_pdf.html
-│   └── ...
+│   ├── compress_pdf.html
+│   ├── rotate_pdf.html
+│   ├── pdf_to_word.html
+│   ├── pdf_to_images.html
+│   ├── word_to_pdf.html
+│   ├── excel_to_pdf.html
+│   ├── ppt_to_pdf.html
+│   ├── html_to_pdf.html
+│   ├── images_to_pdf.html
+│   └── compress_images.html
 ├── static/
 │   ├── css/
-│   │   └── style.css      # Professional styling
+│   │   └── style.css         # Modern gradient design
+│   ├── images/
 │   └── js/
-│       ├── merge.js       # Merge functionality
-│       └── converter.js   # Generic converter
-├── uploads/               # Temporary upload storage
-└── outputs/               # Processed file storage
+│       ├── merge.js          # Merge functionality
+│       ├── split.js          # Split functionality
+│       ├── converter.js      # Generic converter
+│       ├── pdf_to_images.js  # PDF to images
+│       └── compress_images.js # Image compression
+├── uploads/                  # Temporary upload storage
+├── outputs/                  # Processed file storage
+├── setup.sh                  # Setup script
+└── start.sh                  # Start script
 ```
 
 ## Security & Privacy
 
 - All file processing happens locally on your machine
-- Files are automatically cleaned up after 2 hours
+- Files are automatically cleaned up after 2 hours by background daemon
 - No data is sent to external servers
 - No tracking or analytics
+- UUID-based filename generation prevents collisions
+- Secure filename validation prevents path traversal attacks
+- 100MB file size limit to prevent resource exhaustion
 - Open source - you can review the code
 
 ## Troubleshooting
@@ -185,12 +209,13 @@ pip install -r requirements.txt
 
 ## Technology Stack
 
-- **Backend**: Flask (Python)
-- **PDF Processing**: pypdf, PyMuPDF
-- **Conversions**: pdf2docx, LibreOffice, weasyprint
-- **Image Processing**: Pillow
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **UI/UX**: Modern gradient design, responsive layout
+- **Backend**: Flask 3.0+ (Python)
+- **PDF Processing**: pypdf 3.17+, PyMuPDF (fitz) 1.23+
+- **Conversions**: pdf2docx 0.5+, LibreOffice (headless), weasyprint 60+
+- **Image Processing**: Pillow 10.2+
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **UI/UX**: Modern gradient design, drag-and-drop, responsive layout
+- **Security**: Werkzeug 3.0+ (secure_filename, file validation)
 
 ## License
 
