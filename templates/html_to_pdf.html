@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML to PDF - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-page">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>HTML to PDF</h1>
+            <p>Convert HTML files to PDF format</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-code"></i>
+            <h3>Select HTML file</h3>
+            <p>Supports .html and .htm formats</p>
+            <input type="file" id="fileInput" accept=".html,.htm">
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                Choose File
+            </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        <div class="error" id="error"></div>
+
+        <button class="btn btn-primary process-btn" id="processBtn" style="display: none;">
+            <i class="fas fa-exchange-alt"></i> Convert to PDF
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Converting to PDF...</p>
+        </div>
+
+        <div class="result" id="result">
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your HTML file has been converted to PDF.</p>
+            <a href="#" id="downloadBtn" class="btn btn-success" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download PDF
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/converter.js') }}" data-api="/api/html-to-pdf"></script>
+</body>
+</html>

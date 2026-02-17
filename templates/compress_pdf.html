@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress PDF - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-page">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Compress PDF</h1>
+            <p>Reduce PDF file size</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-compress"></i>
+            <h3>Select PDF file</h3>
+            <p>Click to browse or drag and drop</p>
+            <input type="file" id="fileInput" accept=".pdf">
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                Choose File
+            </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        
+        <div class="compression-options" id="compressionOptions" style="display: none; margin: 2rem 0;">
+            <h3 style="margin-bottom: 1rem;">Compression Level</h3>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <button class="quality-btn" data-quality="low" onclick="setQuality('low')">Low (Best Quality)</button>
+                <button class="quality-btn active" data-quality="medium" onclick="setQuality('medium')">Medium</button>
+                <button class="quality-btn" data-quality="high" onclick="setQuality('high')">High (Smallest Size)</button>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Custom Quality: <span id="qualityValue">70</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="70" step="5" 
+                       style="width: 100%; cursor: pointer;" oninput="updateQualityValue(this.value)">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                    <span>Smallest</span>
+                    <span>Balanced</span>
+                    <span>Best Quality</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="error" id="error"></div>
+
+        <button class="btn btn-primary process-btn" id="processBtn" style="display: none;">
+            <i class="fas fa-compress"></i> Compress PDF
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Compressing PDF...</p>
+        </div>
+
+        <div class="result" id="result">
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your PDF has been compressed.</p>
+            <a href="#" id="downloadBtn" class="btn btn-success" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download Compressed PDF
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/converter.js') }}" data-api="/api/compress"></script>
+    <script>
+        let selectedQuality = 70;
+        
+        function setQuality(level) {
+            document.querySelectorAll('.quality-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-quality="${level}"]`).classList.add('active');
+            
+            const qualityMap = { low: 90, medium: 70, high: 40 };
+            selectedQuality = qualityMap[level];
+            document.getElementById('qualitySlider').value = selectedQuality;
+            document.getElementById('qualityValue').textContent = selectedQuality;
+        }
+        
+        function updateQualityValue(value) {
+            selectedQuality = parseInt(value);
+            document.getElementById('qualityValue').textContent = value;
+            document.querySelectorAll('.quality-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        
+        const originalFileInput = document.getElementById('fileInput');
+        originalFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('compressionOptions').style.display = 'block';
+            }
+        });
+        
+        const originalProcessBtn = document.getElementById('processBtn');
+        const originalOnClick = originalProcessBtn.onclick;
+        originalProcessBtn.onclick = function() {
+            const formData = new FormData();
+            formData.append('file', originalFileInput.files[0]);
+            formData.append('quality', selectedQuality);
+            
+            fetch('/api/compress', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('result').style.display = 'block';
+                    document.getElementById('downloadBtn').href = '/download/' + data.filename;
+                    if (data.originalSize && data.compressedSize) {
+                        const savings = ((1 - data.compressedSize / data.originalSize) * 100).toFixed(1);
+                        document.querySelector('#result p').textContent = 
+                            `Reduced from ${(data.originalSize / 1024).toFixed(1)}KB to ${(data.compressedSize / 1024).toFixed(1)}KB (${savings}% smaller)`;
+                    }
+                } else {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').textContent = data.error;
+                    document.getElementById('error').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').textContent = 'Error: ' + error.message;
+                document.getElementById('error').style.display = 'block';
+            });
+            
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('processBtn').style.display = 'none';
+        };
+    </script>
+    <style>
+        .quality-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .quality-btn:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        .quality-btn.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        .compression-options {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images to PDF - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-page">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Images to PDF</h1>
+            <p>Convert multiple images to a single PDF</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-images"></i>
+            <h3>Select image files</h3>
+            <p>Supports PNG, JPG, JPEG, GIF, BMP</p>
+            <input type="file" id="fileInput" accept="image/*" multiple>
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                Choose Files
+            </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        <div class="error" id="error"></div>
+
+        <button class="btn btn-primary process-btn" id="processBtn" style="display: none;">
+            <i class="fas fa-file-pdf"></i> Convert to PDF
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Converting images to PDF...</p>
+        </div>
+
+        <div class="result" id="result">
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your images have been converted to PDF.</p>
+            <a href="#" id="downloadBtn" class="btn btn-success" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download PDF
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/merge.js') }}" data-api="/api/images-to-pdf"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress Images - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-page">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Compress Images</h1>
+            <p>Reduce image file size</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-images"></i>
+            <h3>Select images</h3>
+            <p>Click to browse or drag and drop</p>
+            <input type="file" id="fileInput" accept="image/*" multiple>
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                Choose Files
+            </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        
+        <div class="compression-options" id="compressionOptions" style="display: none; margin: 2rem 0;">
+            <h3 style="margin-bottom: 1rem;">Compression Settings</h3>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Quality: <span id="qualityValue">70</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="70" step="5" 
+                       style="width: 100%; cursor: pointer;" oninput="updateQuality(this.value)">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                    <span>Smallest</span>
+                    <span>Balanced</span>
+                    <span>Best Quality</span>
+                </div>
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem;">Output Format:</label>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="format-btn" data-format="original" onclick="setFormat('original')">Keep Original</button>
+                    <button class="format-btn active" data-format="jpg" onclick="setFormat('jpg')">JPEG</button>
+                    <button class="format-btn" data-format="png" onclick="setFormat('png')">PNG</button>
+                    <button class="format-btn" data-format="webp" onclick="setFormat('webp')">WebP</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="error" id="error"></div>
+
+        <button class="btn btn-primary process-btn" id="processBtn" style="display: none;">
+            <i class="fas fa-compress"></i> Compress Images
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Compressing images...</p>
+        </div>
+
+        <div class="result" id="result">
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your images have been compressed.</p>
+            <div id="downloadLinks" style="margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/compress_images.js') }}"></script>
+    <style>
+        .format-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .format-btn:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        .format-btn.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        .compression-options {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</body>
+</html>

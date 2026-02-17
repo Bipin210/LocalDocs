@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools - Local PDF Converter & Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+            <div class="nav-tagline">Your Privacy-First PDF Solution</div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Every tool you need to work with PDFs</h1>
+            <p>All processing happens locally on your machine. Your files never leave your computer.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tools-section">
+            <h2>Organize PDF</h2>
+            <div class="tools-grid">
+                <a href="/merge-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>Merge PDF</h3>
+                    <p>Combine multiple PDFs into one document</p>
+                </a>
+
+                <a href="/split-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-scissors"></i>
+                    </div>
+                    <h3>Split PDF</h3>
+                    <p>Extract pages from your PDF</p>
+                </a>
+
+                <a href="/compress-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-compress"></i>
+                    </div>
+                    <h3>Compress PDF</h3>
+                    <p>Reduce file size while maintaining quality</p>
+                </a>
+
+                <a href="/rotate-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h3>Rotate PDF</h3>
+                    <p>Rotate pages to the right orientation</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <h2>Convert from PDF</h2>
+            <div class="tools-grid">
+                <a href="/pdf-to-word" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF to editable Word document</p>
+                </a>
+
+                <a href="/pdf-to-images" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>PDF to Images</h3>
+                    <p>Extract images from PDF pages</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <h2>Image Tools</h2>
+            <div class="tools-grid">
+                <a href="/compress-images" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h3>Compress Images</h3>
+                    <p>Reduce image file size</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <h2>Convert to PDF</h2>
+            <div class="tools-grid">
+                <a href="/word-to-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3>Word to PDF</h3>
+                    <p>Convert Word documents to PDF</p>
+                </a>
+
+                <a href="/excel-to-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3>Excel to PDF</h3>
+                    <p>Convert Excel spreadsheets to PDF</p>
+                </a>
+
+                <a href="/ppt-to-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <h3>PowerPoint to PDF</h3>
+                    <p>Convert presentations to PDF</p>
+                </a>
+
+                <a href="/html-to-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>HTML to PDF</h3>
+                    <p>Convert HTML files to PDF</p>
+                </a>
+
+                <a href="/images-to-pdf" class="tool-card">
+                    <div class="tool-icon" style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Images to PDF</h3>
+                    <p>Convert images to PDF document</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2>Why Choose Our PDF Tools?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>100% Private</h3>
+                    <p>All files are processed locally on your machine</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast Processing</h3>
+                    <p>No upload/download time, instant results</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-infinity"></i>
+                    <h3>Unlimited Use</h3>
+                    <p>No file size limits or usage restrictions</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wifi-slash"></i>
+                    <h3>Works Offline</h3>
+                    <p>No internet connection required</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PDF Tools. All rights reserved. Running locally on your machine.</p>
+        </div>
+    </footer>
+</body>
+</html>

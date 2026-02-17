@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Images - PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF Tools</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-page">
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>PDF to Images</h1>
+            <p>Extract images from PDF pages</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-images"></i>
+            <h3>Select PDF file</h3>
+            <p>Click to browse or drag and drop</p>
+            <input type="file" id="fileInput" accept=".pdf">
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                Choose File
+            </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        
+        <div class="format-options" id="formatOptions" style="display: none; margin: 2rem 0;">
+            <h3 style="margin-bottom: 1rem;">Image Format</h3>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="format-btn active" data-format="png" onclick="setFormat('png')">PNG</button>
+                <button class="format-btn" data-format="jpg" onclick="setFormat('jpg')">JPEG</button>
+                <button class="format-btn" data-format="webp" onclick="setFormat('webp')">WebP</button>
+                <button class="format-btn" data-format="tiff" onclick="setFormat('tiff')">TIFF</button>
+            </div>
+            <p style="margin-top: 0.75rem; font-size: 0.85rem; color: #666;">
+                <strong>PNG:</strong> Best quality, lossless | 
+                <strong>JPEG:</strong> Smaller size, good quality | 
+                <strong>WebP:</strong> Modern, efficient | 
+                <strong>TIFF:</strong> Professional, large files
+            </p>
+            
+            <div style="margin-top: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Image Quality: <span id="qualityValue">95</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="95" step="5" 
+                       style="width: 100%; cursor: pointer;" oninput="updateQuality(this.value)">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                    <span>Smallest Size</span>
+                    <span>Balanced</span>
+                    <span>Best Quality</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="error" id="error"></div>
+
+        <button class="btn btn-primary process-btn" id="processBtn" style="display: none;">
+            <i class="fas fa-images"></i> Convert to Images
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Converting PDF to images...</p>
+        </div>
+
+        <div class="result" id="result">
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your PDF has been converted to images.</p>
+            <div id="downloadLinks" style="margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/pdf_to_images.js') }}"></script>
+    <style>
+        .format-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .format-btn:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        .format-btn.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        .format-options {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</body>
+</html>
